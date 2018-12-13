@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import "../App.css";
 import Nav from "./Nav";
+import OinkBrowser from "./OinkBrowser";
 const URL = "http://localhost:3001/hogs";
 
 class App extends Component {
@@ -13,18 +14,25 @@ class App extends Component {
 
   componentDidMount() {
     fetch(URL)
-      .then(function(response) {
-        return response.json();
-      })
-      .then(function(pigs) {
-        console.log(pigs);
-      });
+      .then(response => response.json())
+      .then(pigs =>
+        this.setState(state => {
+          state.pigs = pigs;
+        })
+      );
   }
 
   render() {
+    console.log(this.state.pigSpecialty);
     return (
-      <div className="App">
+      <div className="app">
         <Nav />
+        <div>
+          <OinkBrowser pigs={this.state.pigs} />
+          {/* {this.state.pigs.map(pig => (
+            <OinkBrowser pig={pig} key={pig.id} /> */}
+          ))}
+        </div>
       </div>
     );
   }
